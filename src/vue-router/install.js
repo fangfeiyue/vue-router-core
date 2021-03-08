@@ -36,4 +36,12 @@ export function install(Vue, options) {
       }
     }
   })
+
+  Object.defineProperty(Vue.prototype, '$router', {
+    get () { return this._routerRoot._router } // addRoute、match等等方法
+  })
+
+  Object.defineProperty(Vue.prototype, '$route', {
+    get () { return this._routerRoot._route } // 指代的current对象，里面都是属性如path，matched
+  })
 }
