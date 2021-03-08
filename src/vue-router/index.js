@@ -19,6 +19,9 @@ export default class VueRouter {
         break
     }
   }
+  push(location) {
+    this.history.push(location)
+  }
   match(path) {
     return this.matcher.match(path)
   }

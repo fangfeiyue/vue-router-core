@@ -1,3 +1,6 @@
+import View from './components/view'
+import Link from './components/link'
+
 export let _Vue;
 
 export function install(Vue, options) {
@@ -44,4 +47,7 @@ export function install(Vue, options) {
   Object.defineProperty(Vue.prototype, '$route', {
     get () { return this._routerRoot._route } // 指代的current对象，里面都是属性如path，matched
   })
+
+  Vue.component('RouterView', View)
+  Vue.component('RouterLink', Link)
 }
