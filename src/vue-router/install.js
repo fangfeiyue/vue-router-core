@@ -14,9 +14,21 @@ export function install(Vue, options) {
       if (this.$options.router) {
         this._routerRoot = this; // 把根实例挂载到_routerRoot上
         this._router = this.$options.router // 获取用户传入的options里面的router配置也就是router的实例
-
+        
         // 传递根实例
         this._router.init(this)
+
+        /* 
+        Vue.util.defineReactive(target,key,value,fn)
+        target: 目标对象
+        key: 目标对象属性
+        value: 属性值
+        fn: 只在node调试环境下set时调用
+        */
+        // 将this.current变成响应式的  
+        Vue.util.defineReactive(this, '_route', this._router.history.current)
+
+        console.log('this._route', this._route)
 
       } else {
         this._routerRoot = this.$parent && this.$parent._routerRoot

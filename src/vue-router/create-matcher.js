@@ -1,4 +1,6 @@
-import createRouteMap from './create-route-map'
+import createRouteMap from "./create-route-map";
+import { createRoute } from "./history/base";
+
 export default function createMatcher(routes) {
   // 收集所有的路由路径, 收集路径的对应渲染关系
   // pathList = ['/','/about','/about/a','/about/b']
@@ -11,7 +13,15 @@ export default function createMatcher(routes) {
     createRouteMap(routes, pathMap);
   }
   
-  function match(){} // 根据路径找匹配路由
+  // 根据路径找匹配路由
+  function match(path){
+    console.log('match', path)
+    let record = pathMap[path]
+    console.log('pahtttt', pathMap)
+    return createRoute(record, {
+      path
+    })
+  }
   
   return {
     addRoutes,

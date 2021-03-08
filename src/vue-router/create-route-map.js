@@ -15,6 +15,7 @@ function addRouteRecord(route, pathMap, parent){ // pathMap格式 {路径: 记�
   const path = parent ? parent.path + '/' + route.path : route.path
   let record = {
     path,
+    parent,
     component: route.component,
     name: route.name,
     props: route.props,

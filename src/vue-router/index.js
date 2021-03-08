@@ -1,6 +1,7 @@
 import createMatcher from './create-matcher'
 import { install } from './install'
-import { HashHistory, H5History } from './history'
+import HashHistory from './history/hash'
+import HTML5History from './history/html5'
 export default class VueRouter {
   constructor(options) {
     // 根据用户的配置生成一个映射表，当路由跳转时根据路径找到对应的组件进行渲染
@@ -14,9 +15,12 @@ export default class VueRouter {
         this.history = new HashHistory(this)
         break
       case 'history':
-        this.history = new H5History(this)
+        this.history = new HTML5History(this)
         break
     }
+  }
+  match(path) {
+    return this.matcher.match(path)
   }
   // app - 根实例
   // 路由初始化
@@ -28,6 +32,11 @@ export default class VueRouter {
 
     // 获取跳转路径然后监听hash值的变化
     history.transitionTo(history.getCurrentLocation(), setupHashListener) // 跳转到哪里
+
+    // 为了更新_route
+    history.listen(route => {
+      app._route = route
+    })
   }
 }
 
