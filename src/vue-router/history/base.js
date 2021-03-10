@@ -15,6 +15,17 @@ export function createRoute(record, location) {
   }
 }
 
+function runQueue(queue, iterator, cb) {
+  function next(index) {
+    if (index >= queue.length) return cb() // 表示钩子执行完毕，直接调用回调函数完成渲染
+
+    const hook = queue[index]
+    iterator(hook, () => {
+      next(index + 1)
+    })
+  }
+  next(0)
+}
 export default class History {
   constructor(router) {
     this.router = router
@@ -32,9 +43,17 @@ export default class History {
     console.log('route', route)
     // this.current = route
     // this.cb(route)
-    this.updateRoute(route)
 
-    onComplete && onComplete() // cb调用后hash值变化会再次调用transitionTo
+    let queue = [].concat(this.router.beforeEachHooks)
+    
+    const iterator = (hook, cb) => {
+      hook(route, this.current, cb)
+    }
+
+    runQueue(queue, iterator, () => {
+      this.updateRoute(route)
+      onComplete && onComplete() // cb调用后hash值变化会再次调用transitionTo
+    })
   }
   listen(cb) {
     this.cb = cb

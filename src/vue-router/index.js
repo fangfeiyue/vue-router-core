@@ -9,6 +9,8 @@ export default class VueRouter {
     // 创建匹配器后 核心的方法就是匹配，但是用户可能想动态添加一个路由这个时候还要有个方法可以动态添加路由
     this.matcher = createMatcher(options.routes || [])
 
+    this.beforeEachHooks = []
+
     // 根据当前的mode创建不同的路由管理策略
     switch (options.mode) {
       case 'hash':
@@ -40,6 +42,9 @@ export default class VueRouter {
     history.listen(route => {
       app._route = route
     })
+  }
+  beforeEach(fn) {
+    this.beforeEachHooks.push(fn)
   }
 }
 
