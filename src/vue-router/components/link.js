@@ -5,7 +5,9 @@ export default {
           required:true
       },
       tag:{
-          type:String
+          type:String,
+          // tag默认是a标签
+          default: 'a'
       }
   },
   render(h){
@@ -14,5 +16,6 @@ export default {
           this.$router.push(this.to);
       }
       return <tag onClick={handler}>{this.$slots.default}</tag>
+      // return h(this.tag, {}, this.$slots.default)
   }
 }
