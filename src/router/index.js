@@ -42,7 +42,7 @@ hash： 兼容性好 主要使用 location.hash = 'xxx' window.addEventListener(
 history：需要服务端支持 主要使用 pushState  window.addEventListener('popstate') 实现
 */ 
 const router = new VueRouter({
-  mode: 'hash',
+  mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
