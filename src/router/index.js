@@ -1,6 +1,6 @@
 import Vue from 'vue'
-// import VueRouter from 'vue-router'
-import VueRouter from '@/vue-router'
+import VueRouter from 'vue-router'
+// import VueRouter from '@/vue-router'
 import Home from '../views/Home.vue'
 import About from '../views/About.vue'
 
@@ -48,3 +48,18 @@ const router = new VueRouter({
 })
 
 export default router
+
+
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    console.log(1)
+    next()
+  }, 1000)
+})
+
+router.beforeEach((to, from, next) => {
+  setTimeout(() => {
+    console.log(2)
+    next()
+  }, 1000)
+})
